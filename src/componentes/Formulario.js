@@ -8,6 +8,10 @@ const Formulario = () => {
     const [color, setColor] = useState("");
     const [hizoSubmit, setHizoSubmit] = useState(false);
 
+    //Variable en la cual colocaría la validación de Nombre
+    const [errorNombre, setErrorNombre] = useState(""); 
+    const [errorEdad, setErrorEdad] = useState("");
+
 
     const crearUsuario = (e) => {
         e.preventDefault();
@@ -20,6 +24,24 @@ const Formulario = () => {
         setHizoSubmit(true);
     }
 
+    const validarNombre = e => {
+        setNombre(e.target.value);
+        if(nombre.length < 3) {
+            setErrorNombre("El nombre debe tener al menos 3 caracteres");
+        } else {
+            setErrorNombre("");
+        }
+    }
+
+    const validarEdad = e => {
+        setEdad(e.target.valueAsNumber);
+        if(e.target.valueAsNumber < 18) {
+            setErrorEdad("Se debe ser mayor de edad.");
+        } else {
+            setErrorEdad("");
+        }
+    }
+
     return(
         <form onSubmit={crearUsuario}>
             <h2>Crear Usuario</h2>
@@ -28,7 +50,12 @@ const Formulario = () => {
             </h5>
             <div>
                 <label>Nombre:</label>
-                <input className="form-control" onChange={ e => setNombre(e.target.value) } value={nombre} />
+                <input className="form-control" onChange={ validarNombre } value={nombre} />
+
+                {
+                    errorNombre && <p className="text-danger">{errorNombre}</p>
+                }
+
             </div>
             <div>
                 <label>Apellido:</label>
@@ -36,13 +63,17 @@ const Formulario = () => {
             </div>
             <div>
                 <label>Edad:</label>
-                <input className="form-control" onChange={ e => setEdad(e.target.value)} value={edad} />
+                <input type="number" className="form-control" onChange={ validarEdad } value={edad} />
+                {
+                    errorEdad && <p className="text-danger">{errorEdad}</p>
+                }
             </div>
             <div>
                 <label>Color de Cabello:</label>
                 <input className="form-control" onChange={ e => setColor(e.target.value) } value={color} />
             </div>
             <input type="submit" className="btn btn-success" value="Crear Usuario" />
+            <p>Nombre: {nombre}</p>
         </form>
     )
 }

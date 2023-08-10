@@ -1,9 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const PersonCardFuncional = ({nombre, apellido, edad, ciudad}) => {
 
 //[nombreVariable, funcionParaCambiar]
     const [edoCivil, setEdoCivil] = useState("Casado"); //crea variable y me crea una función para alterar
+
+    //Se ejecuta al momento de cargar mi componente
+    useEffect(()=> {
+        console.log("Renderizamos el contenido");
+    }, [])
+
+    useEffect(()=> {
+        console.log("Hicimos un cambio");
+    }, [edoCivil])
 
     const cambiarEdoCivil = () => {
         if(edoCivil ==="Casado") {
